@@ -21,6 +21,11 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <bean name="pageInterceptor" class="com.xbh.bos.web.interceptor.PageCharset"/>
+        </mvc:interceptor >
+        <mvc:interceptor>
+            <mvc:mapping path="/page/**"></mvc:mapping>
+            <!--<mvc:exclude-mapping path="/login.jsp"></mvc:exclude-mapping>-->
+            <bean name="loginPowerInterceptor" class="com.xbh.bos.web.interceptor.LoginPowerInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
