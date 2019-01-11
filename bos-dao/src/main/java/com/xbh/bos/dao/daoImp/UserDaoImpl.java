@@ -22,7 +22,18 @@ public class UserDaoImpl implements UserDao {
 	public User getUserByUsernameAndPassword(String username, String password) {
 		SqlSession session = sqlSessionFactory.openSession();
 
+		return session.getMapper(UserDao.class).getUserByUsernameAndPassword(username, password);
+	}
+
+	/**
+	 * @param userID
+	 * @param newPassword 需要改变的密码
+	 * @return 更新条数
+	 */
+	public Integer updatePasswordById(String userID, String newPassword) {
+		SqlSession session = sqlSessionFactory.openSession();
+
 		UserDao userDao = session.getMapper(UserDao.class);
-		return userDao.getUserByUsernameAndPassword(username, password);
+		return userDao.updatePasswordById(userID, newPassword);
 	}
 }

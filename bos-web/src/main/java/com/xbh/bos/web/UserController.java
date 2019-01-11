@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author xbh
@@ -34,7 +37,14 @@ public class UserController {
 		String attribute = (String)req.getSession().getAttribute("key");
 				// 校验验证码是否一致
 		if (checkcode.equals(attribute)) {
-			User user = userService.getUserByUsernameAndPassword(username, password);
+			User user = null;
+			try {
+				user = userService.getUserByUsernameAndPassword(username, password);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
 
 			if (user != null) {
 				req.getSession().setAttribute("user", user);
@@ -57,5 +67,28 @@ public class UserController {
 	public String userLogout(HttpServletRequest req, HttpServletResponse res){
 		req.getSession().invalidate();
 		return "redirect:/login.jsp";
+	}
+
+	@RequestMapping(value = "/changePass", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String changePass(HttpServletRequest request){
+		// 获取user
+		User user = (User)request.getSession().getAttribute("user");
+		// 获取新密码
+		String newpass = request.getParameter("newpass");
+		Integer flag = 0;
+		try{
+			// 返回标识，0即失败
+			flag = userService.updatePasswordById(user.getUser_id(), newpass);
+			if (flag != 0 && flag != null){
+				user.setPassword(newpass);
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}finally {
+			return flag.toString();
+		}
 	}
 }
