@@ -1,4 +1,4 @@
-import com.xbh.bos.dao.daoImp.UserDaoImpl;
+import com.xbh.bos.dao.daoimp.UserDaoimpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class test {
 	@Test
 	public void testDao() {
-		UserDaoImpl userDao = new UserDaoImpl();
+		UserDaoimpl userDao = new UserDaoimpl();
 
 		userDao.updatePasswordById("2", "132123213213");
 	}

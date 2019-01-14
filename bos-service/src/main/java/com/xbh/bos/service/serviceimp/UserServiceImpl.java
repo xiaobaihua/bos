@@ -1,9 +1,7 @@
 package com.xbh.bos.service.serviceimp;
 
 import com.xbh.bos.dao.UserDao;
-import com.xbh.bos.domain.User;
 import com.xbh.bos.service.UserService;
-import com.xbh.bos.utils.Cipher;
 import com.xbh.bos.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +26,6 @@ public class UserServiceImpl implements UserService {
 	public Integer updatePasswordById(String userID, String newPassword) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		// 用户ID存在
 		if (StringUtils.isExist(userID)){
-			// 获取MD5摘要以base64保存
-			newPassword = Cipher.getMd5Cipher(newPassword);
 			return userDao.updatePasswordById(userID, newPassword);
 		}
 		// 0为失败

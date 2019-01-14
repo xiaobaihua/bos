@@ -195,7 +195,7 @@
 					<tr>
 						<td>取派标准</td>
 						<td>
-							<input type="text" name="standard" class="easyui-validatebox" required="true"/>  
+							<input type="text" name="standard" class="easyui-validatebox" required="true"/>
 						</td>
 					</tr>
 					</table>

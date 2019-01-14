@@ -1,6 +1,5 @@
 package com.xbh.bos.web;
 
-import com.xbh.bos.domain.User;
 import com.xbh.bos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

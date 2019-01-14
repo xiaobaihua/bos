@@ -1,5 +1,6 @@
 package com.xbh.bos.dao;
 
+import com.xbh.bos.domain.Subarea;
 import com.xbh.bos.domain.User;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -10,15 +11,14 @@ import org.apache.ibatis.annotations.Update;
  * @Description
  */
 public interface UserDao {
+	Integer deleteByid(String id);
 
-	/**
-	*@author xbh
-	*@date 2019/1/1 11:31
-	*@param username
-	*@param password
-	*@return com.xbh.bos.domain.User
-	*@description
-	*/
+	Integer insert(Subarea record);
+
+	User selectByid(String id);
+
+	int updateByid(Subarea record);
+
 	@Select("select * from user_tab where username=#{arg0} and password=md5(#{arg1})")
 	User getUserByUsernameAndPassword(String username, String password);
 

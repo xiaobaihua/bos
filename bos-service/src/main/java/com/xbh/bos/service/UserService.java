@@ -1,7 +1,5 @@
 package com.xbh.bos.service;
 
-import com.xbh.bos.domain.User;
-
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 

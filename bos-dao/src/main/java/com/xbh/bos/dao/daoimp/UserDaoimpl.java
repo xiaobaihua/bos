@@ -1,6 +1,7 @@
-package com.xbh.bos.dao.daoImp;
+package com.xbh.bos.dao.daoimp;
 
 import com.xbh.bos.dao.UserDao;
+import com.xbh.bos.domain.Subarea;
 import com.xbh.bos.domain.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,9 +16,32 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional(rollbackFor = Exception.class)
-public class UserDaoImpl implements UserDao {
+public class UserDaoimpl implements UserDao {
 	@Autowired
 	SqlSessionFactory sqlSessionFactory;
+
+	private UserDao getUserDao(){
+		SqlSession session = sqlSessionFactory.openSession();
+
+		return session.getMapper(UserDao.class);
+	}
+
+	public Integer deleteByid(String id) {
+
+		return null;
+	}
+
+	public Integer insert(Subarea record) {
+		return null;
+	}
+
+	public User selectByid(String id) {
+		return null;
+	}
+
+	public int updateByid(Subarea record) {
+		return 0;
+	}
 
 	public User getUserByUsernameAndPassword(String username, String password) {
 		SqlSession session = sqlSessionFactory.openSession();
