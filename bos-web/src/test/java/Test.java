@@ -1,4 +1,6 @@
+import com.xbh.bos.dao.StaffDao;
 import com.xbh.bos.dao.UserDao;
+import com.xbh.bos.domain.Staff;
 import com.xbh.bos.utils.Cipher;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import java.security.NoSuchAlgorithmException;
 public class Test {
 	@Autowired
 	UserDao userDao;
+	@Autowired
+	private StaffDao staffDao;
+
 
 	@org.junit.Test
 	public void testDao() {
@@ -46,8 +51,10 @@ public class Test {
 
 	@org.junit.Test
 	public void test1s() {
-		byte b = 112;
+		Staff staff = new Staff();
+		staff.setName("哈哈哈");
+		staff.setTelephone("123");
 
-		System.out.println(b);
+		staffDao.save(staff);
 	}
 }

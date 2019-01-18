@@ -44,9 +44,8 @@ public class UserDaoimpl implements UserDao {
 	}
 
 	public User getUserByUsernameAndPassword(String username, String password) {
-		SqlSession session = sqlSessionFactory.openSession();
-
-		return session.getMapper(UserDao.class).getUserByUsernameAndPassword(username, password);
+		UserDao userDao = getUserDao();
+		return userDao.getUserByUsernameAndPassword(username, password);
 	}
 
 	/**
@@ -55,9 +54,7 @@ public class UserDaoimpl implements UserDao {
 	 * @return 更新条数
 	 */
 	public Integer updatePasswordById(String userID, String newPassword) {
-		SqlSession session = sqlSessionFactory.openSession();
-
-		UserDao userDao = session.getMapper(UserDao.class);
+		UserDao userDao = getUserDao();
 		return userDao.updatePasswordById(userID, newPassword);
 	}
 }

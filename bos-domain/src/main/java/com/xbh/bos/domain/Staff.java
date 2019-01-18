@@ -7,9 +7,9 @@ public class Staff {
 
     private String telephone;
 
-    private String haspda;
+    private String haspda = "0";
 
-    private String deltag;
+    private String deltag = "0";
 
     private String station;
 

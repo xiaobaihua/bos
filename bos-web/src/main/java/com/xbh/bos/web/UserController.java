@@ -1,5 +1,6 @@
 package com.xbh.bos.web;
 
+import com.xbh.bos.domain.User;
 import com.xbh.bos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,7 +79,7 @@ public class UserController {
 		Integer flag = 0;
 		try{
 			// 返回标识，0即失败
-			flag = userService.updatePasswordById(user.getUser_id(), newpass);
+			flag = userService.updatePasswordById(user.getUserId(), newpass);
 			if (flag != 0 && flag != null){
 				user.setPassword(newpass);
 			}

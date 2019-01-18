@@ -175,6 +175,15 @@
 	function showAbout(){
 		$.messager.alert("宅急送 v1.0","管理员邮箱: zqx@itcast.cn");
 	}
+
+	$.extend($.fn.validatebox.defaults.rules, {
+		equals : {
+			validator: function(value,param){
+				return $("#txtNewPass").val() == value
+			},
+			message: '两次密码不一致， 请立刻自杀'
+		}
+	})
 </script>
 </head>
 <body class="easyui-layout">
@@ -242,7 +251,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<!--修改密码窗口-->
     <div id="editPwdWindow" class="easyui-window" title="修改密码" collapsible="false" minimizable="false" modal="true" closed="true" resizable="false"
         maximizable="false" icon="icon-save"  style="width: 300px; height: 160px; padding: 5px;
@@ -259,7 +268,7 @@
 						<tr>
 							<td>确认密码：</td>
 							<td><input id="txtRePass" type="Password" class="txt01 easyui-validatebox" required="true"
-									   validType="length[6,10]"/></td>
+									   validType="equals['#txtNewPass'], length[6,10]"/></td>
 						</tr>
 					</table>
 				</div>

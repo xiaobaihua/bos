@@ -1,6 +1,7 @@
 package com.xbh.bos.service.serviceimp;
 
 import com.xbh.bos.dao.UserDao;
+import com.xbh.bos.domain.User;
 import com.xbh.bos.service.UserService;
 import com.xbh.bos.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,22 @@ public class UserServiceImpl implements UserService {
 			return userDao.updatePasswordById(userID, newPassword);
 		}
 		// 0为失败
+		return 0;
+	}
+
+	public int deleteByid(String id) {
+		return 0;
+	}
+
+	public int save(User record) {
+		return 0;
+	}
+
+	public User selectByid(String id) {
+		return null;
+	}
+
+	public int updateByid(User record) {
 		return 0;
 	}
 }

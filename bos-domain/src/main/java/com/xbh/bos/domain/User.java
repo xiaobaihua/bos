@@ -1,18 +1,18 @@
 package com.xbh.bos.domain;
 
 public class User {
-    private String userId;
+    private String user_Id;
 
     private String username;
 
     private String password;
 
     public String getUserId() {
-        return userId;
+        return user_Id;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+        this.user_Id = userId == null ? null : userId.trim();
     }
 
     public String getUsername() {

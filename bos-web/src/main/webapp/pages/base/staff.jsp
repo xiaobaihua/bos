@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -145,7 +145,49 @@
 	        height: 400,
 	        resizable:false
 	    });
-		
+
+		$("#save").click(function () {
+			$("#staffForm").form({
+				url:"${pageContext.request.contextPath}/staff/add",
+				onSubmit: function(){
+					// 做一些检查
+					// 返回false来防止提交;
+					var v = $("#staffForm").form("validate")
+					if (!v) {
+						$.messager.alert('警告','数据验证错误','warning');
+					}
+					return v
+				},
+
+				success:function(data){
+					if (data != 0){
+						$.messager.show({
+							title:'提示',
+							msg:'添加成功！',
+							timeout:1000,
+							showType:'show',
+							style:{
+								top:document.body.scrollTop+document.documentElement.scrollTop,
+							}
+						});
+					}
+				}
+			});
+			$('#staffForm').submit();
+		})
+
+		//自定校验， 长度最小值
+		$.extend($.fn.validatebox.defaults.rules, {
+			minLength: {
+				validator: function(value, param){
+					return value.length >= param[0];
+				},
+				message: '名字最少2位'
+
+			}
+		});
+
+		//自定校验， 长度最小值
 	});
 
 	function doDblClickRow(rowIndex, rowData){
@@ -165,19 +207,15 @@
 		</div>
 		
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form>
+			<form id="staffForm" method="post">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">收派员信息</td>
 					</tr>
 					<!-- TODO 这里完善收派员添加 table -->
 					<tr>
-						<td>取派员编号</td>
-						<td><input type="text" name="id" class="easyui-validatebox" required="true"/></td>
-					</tr>
-					<tr>
 						<td>姓名</td>
-						<td><input type="text" name="name" class="easyui-validatebox" required="true"/></td>
+						<td><input type="text" name="name" class="easyui-validatebox" required="true" validType="minLength[2]"/></td>
 					</tr>
 					<tr>
 						<td>手机</td>
