@@ -1,6 +1,7 @@
 package com.xbh.bos.service;
 
 import com.xbh.bos.domain.Staff;
+import com.xbh.bos.domain.vo.PageVO;
 
 /**
  * @author xbh
@@ -9,4 +10,5 @@ import com.xbh.bos.domain.Staff;
  */
 public interface StaffService extends BaseService<Staff>{
 
+	PageVO getStaffList(String page, String rows);
 }

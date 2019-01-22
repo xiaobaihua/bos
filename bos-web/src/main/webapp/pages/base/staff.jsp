@@ -44,8 +44,9 @@
 		alert("将取派员还原...");
 	}
 	//工具栏
-	var toolbar = [ {
-		id : 'button-view',	
+	var toolbar = [
+	{
+		id : 'button-view',
 		text : '查询',
 		iconCls : 'icon-search',
 		handler : doView
@@ -66,7 +67,7 @@
 		handler : doRestore
 	}];
 	// 定义列
-	var columns = [ [ {
+	var columns = [[ {
 		field : 'id',
 		checkbox : true,
 	},{
@@ -118,8 +119,8 @@
 	$(function(){
 		// 先将body隐藏，再显示，不会出现页面刷新效果
 		$("body").css({visibility:"visible"});
-		
-		// 取派员信息表格
+
+		//取派员信息表格
 		$('#grid').datagrid( {
 			iconCls : 'icon-forward',
 			fit : true,
@@ -129,7 +130,7 @@
 			pageList: [30,50,100],
 			pagination : true,
 			toolbar : toolbar,
-			url : "json/staff.json",
+			url : "${pageContext.request.contextPath}/staff/list",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow
@@ -187,7 +188,16 @@
 			}
 		});
 
-		//自定校验， 长度最小值
+		//自定校验， 手机号
+		$.extend($.fn.validatebox.defaults.rules, {
+			isphone: {
+				validator: function(value, param){
+					var reg = /^1[3578][0-9]{9}$/
+					return reg.test(value)
+				},
+				message: '手机号格式有误'
+			}
+		});
 	});
 
 	function doDblClickRow(rowIndex, rowData){
@@ -219,7 +229,7 @@
 					</tr>
 					<tr>
 						<td>手机</td>
-						<td><input type="text" name="telephone" class="easyui-validatebox" required="true"/></td>
+						<td><input type="text" name="telephone" class="easyui-validatebox" required="true" validType="isphone"/></td>
 					</tr>
 					<tr>
 						<td>单位</td>

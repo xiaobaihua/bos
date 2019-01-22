@@ -15,6 +15,19 @@ public class Staff {
 
     private String standard;
 
+    public Staff(String id, String name, String telephone, String haspda, String deltag, String station, String standard) {
+        this.id = id;
+        this.name = name;
+        this.telephone = telephone;
+        this.haspda = haspda;
+        this.deltag = deltag;
+        this.station = station;
+        this.standard = standard;
+    }
+
+    public Staff() {
+    }
+
     public String getId() {
         return id;
     }
