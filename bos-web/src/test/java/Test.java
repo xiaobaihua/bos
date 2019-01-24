@@ -1,8 +1,11 @@
 import com.google.gson.Gson;
+import com.xbh.bos.dao.BaseDao;
 import com.xbh.bos.dao.StaffDao;
 import com.xbh.bos.dao.UserDao;
 import com.xbh.bos.domain.Staff;
+import com.xbh.bos.domain.User;
 import com.xbh.bos.domain.vo.PageVO;
+import com.xbh.bos.service.UserService;
 import com.xbh.bos.utils.Cipher;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +67,7 @@ public class Test {
 
 	@org.junit.Test
 	public void name() {
-		System.out.println(123);
+
 	}
 
 }

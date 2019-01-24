@@ -2,10 +2,11 @@ package com.xbh.bos.dao.daoimp;
 
 import com.xbh.bos.dao.StaffDao;
 import com.xbh.bos.domain.Staff;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author xbh
@@ -14,29 +15,33 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class StaffDaoimp implements StaffDao {
+	@Override
+	public List<Staff> getRecordListLimit(Integer stack, Integer end) {
+		return null;
+	}
+
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 
-	private StaffDao getStaffDao() {
-		SqlSession session = sqlSessionFactory.openSession();
-		return session.getMapper(StaffDao.class);
-	}
-
-
-	public int deleteByid(String id) {
-
+	@Override
+	public int save(Staff record) {
 		return 0;
 	}
 
-	public int save(Staff record) {
-		return getStaffDao().save(record);
-	}
-
+	@Override
 	public Staff selectByid(String id) {
 		return null;
 	}
 
+	@Override
 	public int updateByid(Staff record) {
 		return 0;
+	}
+
+
+
+	@Override
+	public Integer getTotal() {
+		return null;
 	}
 }

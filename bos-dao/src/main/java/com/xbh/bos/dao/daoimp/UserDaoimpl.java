@@ -1,50 +1,31 @@
 package com.xbh.bos.dao.daoimp;
 
 import com.xbh.bos.dao.UserDao;
-import com.xbh.bos.domain.Subarea;
 import com.xbh.bos.domain.User;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author xbh
  * @date
- * @Description
+ * @DescriptionT
  */
 @Repository
 @Transactional(rollbackFor = Exception.class)
-public class UserDaoimpl implements UserDao {
-	@Autowired
-	SqlSessionFactory sqlSessionFactory;
+public class UserDaoimpl extends BaseDaoimp<User> implements UserDao  {
+//	@Override
+//	public User getUserByUsernameAndPassword(String username, String password) {
+//		return null;
+//	}
+//
+//	@Override
+//	public Integer updatePasswordById(String userID, String newPassword) {
+//		return null;
+//	}
 
-	private UserDao getUserDao(){
-		SqlSession session = sqlSessionFactory.openSession();
-
-		return session.getMapper(UserDao.class);
-	}
-
-	public Integer deleteByid(String id) {
-
-		return null;
-	}
-
-	public Integer insert(Subarea record) {
-		return null;
-	}
-
-	public User selectByid(String id) {
-		return null;
-	}
-
-	public int updateByid(Subarea record) {
-		return 0;
-	}
-
+	@Override
 	public User getUserByUsernameAndPassword(String username, String password) {
-		UserDao userDao = getUserDao();
+		UserDao userDao = (UserDao) super.getMapper();
 		return userDao.getUserByUsernameAndPassword(username, password);
 	}
 
@@ -53,8 +34,9 @@ public class UserDaoimpl implements UserDao {
 	 * @param newPassword 需要改变的密码
 	 * @return 更新条数
 	 */
+	@Override
 	public Integer updatePasswordById(String userID, String newPassword) {
-		UserDao userDao = getUserDao();
+		UserDao userDao = (UserDao) super.getMapper();
 		return userDao.updatePasswordById(userID, newPassword);
 	}
 }

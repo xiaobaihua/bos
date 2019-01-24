@@ -2,12 +2,21 @@ package com.xbh.bos.dao;
 
 import com.xbh.bos.domain.Decidedzone;
 
-public interface DecidedzoneDao {
-    int deleteByid(String id);
+import java.util.List;
 
-    int insert(Decidedzone record);
+public interface DecidedzoneDao extends BaseDao<Decidedzone>{
+    @Override
+    int save(Decidedzone record);
 
+    @Override
     Decidedzone selectByid(String id);
 
+    @Override
     int updateByid(Decidedzone record);
+
+    @Override
+    List<Decidedzone> getRecordListLimit(Integer stack, Integer end);
+
+    @Override
+    Integer getTotal();
 }

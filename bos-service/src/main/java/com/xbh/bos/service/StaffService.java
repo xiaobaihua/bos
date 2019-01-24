@@ -9,6 +9,5 @@ import com.xbh.bos.domain.vo.PageVO;
  * @Description
  */
 public interface StaffService extends BaseService<Staff>{
-
 	PageVO getStaffList(String page, String rows);
 }
