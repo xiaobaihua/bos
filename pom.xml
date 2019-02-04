@@ -139,4 +139,5 @@
         <module>bos-utils</module>
         <module>bos-domain</module>
     </modules>
+
 </project>

@@ -9,7 +9,7 @@ public class Staff {
 
     private String haspda = "0";
 
-    private String deltag = "0";
+    private String deltag = "1";
 
     private String station;
 

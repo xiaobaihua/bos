@@ -6,13 +6,13 @@ import com.xbh.bos.domain.vo.PageVO;
 import com.xbh.bos.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author xbh
@@ -22,8 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/staff")
 public class StaffController {
-
-
 	@Autowired
 	private StaffService staffService;
 
@@ -46,4 +44,25 @@ public class StaffController {
 		System.out.println(gson.toJson(vo));
 		return gson.toJson(vo);
 	}
+
+	@RequestMapping("/delete")
+	@ResponseBody
+	public String delete(@RequestParam String ids){
+		String[] strings = ids.split(",");
+
+		Boolean aBoolean = staffService.deleteALLByList(Arrays.asList(strings));
+
+		return (aBoolean?"1":"0");
+	}
+
+	@RequestMapping("/restore")
+	@ResponseBody
+	public String restore(@RequestParam String ids){
+		String[] strings = ids.split(",");
+
+		Boolean aBoolean = staffService.restoreAllByList(Arrays.asList(strings));
+
+		return (aBoolean?"1":"0");
+	}
+
 }

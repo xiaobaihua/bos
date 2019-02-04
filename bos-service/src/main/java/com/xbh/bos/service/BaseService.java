@@ -7,8 +7,30 @@ package com.xbh.bos.service;
  */
 public interface BaseService<T> {
 	/**
+	 向数据库添加
 	 * @param record
 	 * @return 0为更新失败
 	 */
 	int save(T record);
+
+	/**
+	 根据id删除实体
+	 * @param id
+	 * @return 0为删除失败
+	 */
+	int deleteByID(String id);
+
+	/**
+	 更新该实体
+	 * @param record
+	 * @return 0为更新失败
+	 */
+	int update(T record);
+
+	/**
+	 查找实体
+	 * @param id
+	 * @return 返回id所属的实体， null为失败
+	 */
+	T findByID(String id);
 }

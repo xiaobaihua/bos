@@ -23,7 +23,6 @@ public class UserDaoimpl extends BaseDaoimp<User> implements UserDao  {
 //		return null;
 //	}
 
-	@Override
 	public User getUserByUsernameAndPassword(String username, String password) {
 		UserDao userDao = (UserDao) super.getMapper();
 		return userDao.getUserByUsernameAndPassword(username, password);
@@ -34,7 +33,6 @@ public class UserDaoimpl extends BaseDaoimp<User> implements UserDao  {
 	 * @param newPassword 需要改变的密码
 	 * @return 更新条数
 	 */
-	@Override
 	public Integer updatePasswordById(String userID, String newPassword) {
 		UserDao userDao = (UserDao) super.getMapper();
 		return userDao.updatePasswordById(userID, newPassword);

@@ -15,6 +15,9 @@ public class PageController {
 	@RequestMapping("/{pageName}")
 	public String toPage(@PathVariable String pageName){
 		String[] strings = pageName.split("_");
-		return "/pages/" + strings[0] + "/" + strings[1];
+		if (strings.length > 1 && strings != null){
+			return "/pages/" + strings[0] + "/" + strings[1];
+		}
+		return "index";
 	}
 }

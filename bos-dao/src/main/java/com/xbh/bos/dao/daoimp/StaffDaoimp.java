@@ -2,11 +2,7 @@ package com.xbh.bos.dao.daoimp;
 
 import com.xbh.bos.dao.StaffDao;
 import com.xbh.bos.domain.Staff;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author xbh
@@ -14,34 +10,28 @@ import java.util.List;
  * @Description
  */
 @Repository
-public class StaffDaoimp implements StaffDao {
-	@Override
-	public List<Staff> getRecordListLimit(Integer stack, Integer end) {
-		return null;
-	}
-
-	@Autowired
-	private SqlSessionFactory sqlSessionFactory;
+public class StaffDaoimp extends BaseDaoimp<Staff> implements StaffDao{
 
 	@Override
-	public int save(Staff record) {
-		return 0;
+	protected StaffDao getMapper() {
+		return (StaffDao)super.getMapper();
 	}
 
 	@Override
-	public Staff selectByid(String id) {
-		return null;
+	public String getDeltagByid(String id) {
+		return getMapper().getDeltagByid(id);
 	}
 
 	@Override
-	public int updateByid(Staff record) {
-		return 0;
+	public int updateDelTagByid(String id, String deltag) {
+		return getMapper().updateDelTagByid(id, deltag);
 	}
 
+	/**
+	 逻辑删除， 先判断是否删除如果没有删除则 deltag为1
+	 * @param record
+	 * @return 当已被删除(deltag == 0) 返回0更新失败
+	 */
 
 
-	@Override
-	public Integer getTotal() {
-		return null;
-	}
 }

@@ -21,11 +21,11 @@ public class BaseDaoimp<T> implements BaseDao<T> {
 	@Autowired
 	SqlSessionFactory sqlSessionFactory;
 
-	Class clazz;
+	private Class clazz;
 	/**
 	 * 子类实现的dao接口
 	 */
-	Class interf;
+	private Class interf;
 
 	/**
 	 * 通过构造方法， 自动获取子类的mapper接口与泛型
@@ -33,13 +33,12 @@ public class BaseDaoimp<T> implements BaseDao<T> {
 	public BaseDaoimp() {
 		try {
 			ParameterizedType type = ((ParameterizedType) this.getClass().getGenericSuperclass());
-			this.clazz = (Class)type.getActualTypeArguments()[0];
-			this.interf = this.getClass().getInterfaces()[0];
+			clazz = (Class)type.getActualTypeArguments()[0];
+			interf = this.getClass().getInterfaces()[0];
 		}catch (ClassCastException e){
 			Logger logger = Logger.getLogger(this.getClass().getName());
 			logger.info("Type强转parameterType异常");
 		}
-
 	}
 
 	protected BaseDao getMapper(){
@@ -62,14 +61,19 @@ public class BaseDaoimp<T> implements BaseDao<T> {
 		return getMapper().updateByid(record);
 
 	}
-
 	@Override
-	public List<T> getRecordListLimit(Integer stack, Integer end) {
+	public List<T> getRecordListLimit(Integer stack, Integer end) { ;
 		return getMapper().getRecordListLimit(stack, end);
 	}
 
 	@Override
 	public Integer getTotal() {
 		return getMapper().getTotal();
+	}
+
+
+	@Override
+	public Integer detele(T record) {
+		return getMapper().detele(record);
 	}
 }

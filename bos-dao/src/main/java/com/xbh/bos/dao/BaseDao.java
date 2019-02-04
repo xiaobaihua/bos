@@ -8,7 +8,6 @@ import java.util.List;
  * @Description
  */
 public interface BaseDao<T> {
-
 	int save(T record);
 
 	T selectByid(String id);
@@ -18,4 +17,6 @@ public interface BaseDao<T> {
 	List<T> getRecordListLimit(Integer stack, Integer end);
 
 	Integer getTotal();
+
+	Integer detele(T record);
 }

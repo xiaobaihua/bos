@@ -1,12 +1,16 @@
 package com.xbh.bos.service.serviceimp;
 
 import com.xbh.bos.dao.StaffDao;
+import com.xbh.bos.dao.daoimp.BaseDaoimp;
 import com.xbh.bos.domain.Staff;
 import com.xbh.bos.domain.vo.PageVO;
 import com.xbh.bos.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 /**
  * @author xbh
  * @date
@@ -14,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class StaffServiceImpl implements StaffService {
+public class StaffServiceImpl implements StaffService{
 	@Autowired
 	private StaffDao staffDao;
 
@@ -29,13 +33,60 @@ public class StaffServiceImpl implements StaffService {
 		pageVO.setCurrentPage(Integer.valueOf(page));
 		pageVO.setCurrentRowsTotal(Integer.valueOf(rows));
 
-		staffDao.getRecordListLimit(pageVO.getLimitStratIndex(), pageVO.getLimitEndIndex());
+		List<Staff> list = staffDao.getRecordListLimit(pageVO.getLimitStratIndex(), pageVO.getCurrentRowsTotal());
+		Integer total = staffDao.getTotal();
 
+		pageVO.setrows(list);
+		pageVO.setTotal(Long.valueOf(total));
 		return pageVO;
 	}
 
 	@Override
-	public int save(Staff staff) {
+	public Boolean deleteALLByList(List list) {
+		// 更新成功条数
+		int totle = 0;
+
+		for (Object o : list) {
+			String deltagByid = staffDao.getDeltagByid(o.toString());
+
+			if (Integer.valueOf(deltagByid) != 1){
+				totle += staffDao.updateDelTagByid(o.toString(), "1");
+			}
+		}
+		return totle != 0;
+	}
+
+	@Override
+	public Boolean restoreAllByList(List list) {
+		// 更新成功条数
+		int totle = 0;
+		for (Object o : list) {
+			String deltagByid = staffDao.getDeltagByid(o.toString());
+			if (Integer.valueOf(deltagByid) != 0){
+				totle += staffDao.updateDelTagByid(o.toString(), "0");
+			}
+		}
+		return totle != 0;
+	}
+
+
+	@Override
+	public int save(Staff record) {
+		return staffDao.save(record);
+	}
+
+	@Override
+	public int deleteByID(String id) {
 		return 0;
+	}
+
+	@Override
+	public int update(Staff record) {
+		return 0;
+	}
+
+	@Override
+	public Staff findByID(String id) {
+		return null;
 	}
 }

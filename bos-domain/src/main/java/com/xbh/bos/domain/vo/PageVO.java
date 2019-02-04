@@ -60,7 +60,7 @@ public class PageVO implements Serializable {
 	}
 
 	public Integer getLimitStratIndex() {
-		return limitStartIndex;
+		return (getCurrentPage() - 1) * 30;
 	}
 
 	public void setLimitStratIndex(Integer limitStratIndex) {
@@ -78,7 +78,11 @@ public class PageVO implements Serializable {
 	@Override
 	public String toString() {
 		return "PageVO{" +
-			"total=" + total +
+			"currentPage=" + currentPage +
+			", CurrentRowsTotal=" + CurrentRowsTotal +
+			", limitStartIndex=" + limitStartIndex +
+			", limitEndIndex=" + limitEndIndex +
+			", total=" + total +
 			", rows=" + rows +
 			'}';
 	}

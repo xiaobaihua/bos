@@ -37,10 +37,43 @@
 	}
 	
 	function doDelete(){
-		alert("删除...");
+		var a = $("#grid").datagrid("getSelections")
+		var ids = new Array()
+		for (var i = 0; i < a.length; i++) {
+			ids[i] = a[i].id
+		}
+		$.post(
+			"${pageContext.request.contextPath}/staff/delete",
+			{"ids":ids.join(",")},
+			function x(data) {
+				// 0为失败
+				if (data == 0){
+					$.messager.alert('提示','删除失败，请联系管理员',"warning");
+				}
+				location.href = "${pageContext.request.contextPath}/page/base_staff"
+			},
+			"json"
+		)
 	}
 	
 	function doRestore(){
+		var a = $("#grid").datagrid("getSelections")
+		var ids = new Array()
+		for (var i = 0; i < a.length; i++) {
+			ids[i] = a[i].id
+		}
+		$.post(
+			"${pageContext.request.contextPath}/staff/restore",
+			{"ids":ids.join(",")},
+			function x(data) {
+				// 0为失败
+				if (data == 0){
+					$.messager.alert('提示','删除失败，请联系管理员',"warning");
+				}
+				location.href = "${pageContext.request.contextPath}/page/base_staff"
+			},
+			"json"
+		)
 		alert("将取派员还原...");
 	}
 	//工具栏
@@ -98,10 +131,10 @@
 		width : 120,
 		align : 'center',
 		formatter : function(data,row, index){
-			if(data=="0"){
-				return "正常使用"
+			if(data=="1"){
+				return "已作废"
 			}else{
-				return "已作废";
+				return "正常使用";
 			}
 		}
 	}, {
