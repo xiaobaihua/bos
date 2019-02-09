@@ -33,7 +33,7 @@
 	}
 	
 	function doView(){
-		alert("查看...");
+		$('#findStaffWindow').window("open");
 	}
 	
 	function doDelete(){
@@ -74,7 +74,6 @@
 			},
 			"json"
 		)
-		alert("将取派员还原...");
 	}
 	//工具栏
 	var toolbar = [
@@ -180,6 +179,28 @@
 	        resizable:false
 	    });
 
+		// 修改取派员窗口
+		$('#editStaffWindow').window({
+			title: '编辑取派员',
+			width: 400,
+			modal: true,
+			shadow: true,
+			closed: true,
+			height: 400,
+			resizable:false
+		});
+
+		// 寻找取派员窗口
+		$('#findStaffWindow').window({
+			title: '查找取派员',
+			width: 400,
+			modal: true,
+			shadow: true,
+			closed: true,
+			height: 400,
+			resizable:false
+		});
+
 		$("#save").click(function () {
 			$("#staffForm").form({
 				url:"${pageContext.request.contextPath}/staff/add",
@@ -210,6 +231,61 @@
 			$('#staffForm').submit();
 		})
 
+		$("#find").click(function () {
+			$("#findStaffForm").form({
+				url:"${pageContext.request.contextPath}/staff/findStaffs",
+				onSubmit: function(){
+					// 做一些检查
+					// 返回false来防止提交;
+					var v = document.querySelector("#findStaffForm").elements
+					// 记录有多少input的值为空，最少有一个input不为空
+					var totle = 0
+					for (var i = 0; i < v.length; i++) {
+						if (v[i].value == ""){
+							totle++
+						}
+
+						if (totle > 2){
+							$.messager.alert('错误','至少输入一个查询条件','error');
+						}
+					}
+				},
+				success:function(data){
+					data = eval('(' + data + ')');
+					$('#grid').datagrid('loadData', data);
+					$('#findStaffWindow').window('close');
+				}
+			});
+			$('#findStaffForm').submit();
+		})
+
+		$("#edit").click(function () {
+			// 提交表单
+			$('#editStaffForm').form('submit', {
+				url: "${pageContext.request.contextPath}/staff/editStaff",
+				onSubmit: function(){
+					var isValid = $('#editStaffForm').form('validate');
+					if (!isValid){
+						$.messager.alert("错误", "输入的数据有误", "error")
+					}
+					console.log(isValid)
+					return isValid;	// 返回false,将阻止表单提交
+				},
+				success: function(data){
+					if (data == "1"){
+						$.messager.show({
+							title:'提示',
+							msg:'修改成功',
+							timeout:1000,
+							showType:'slide'
+						});
+					}
+
+					window.location.href = "${pageContext.request.contextPath}/page/base_staff"
+				}
+			});
+		})
+
 		//自定校验， 长度最小值
 		$.extend($.fn.validatebox.defaults.rules, {
 			minLength: {
@@ -234,7 +310,8 @@
 	});
 
 	function doDblClickRow(rowIndex, rowData){
-		alert("双击表格数据...");
+		$('#editStaffWindow').window("open");
+		$("#editStaffForm").form("load", rowData)
 	}
 </script>	
 </head>
@@ -255,7 +332,6 @@
 					<tr class="title">
 						<td colspan="2">收派员信息</td>
 					</tr>
-					<!-- TODO 这里完善收派员添加 table -->
 					<tr>
 						<td>姓名</td>
 						<td><input type="text" name="name" class="easyui-validatebox" required="true" validType="minLength[2]"/></td>
@@ -283,5 +359,83 @@
 			</form>
 		</div>
 	</div>
+
+	<div class="easyui-window" title="查找" id="findStaffWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+		<div region="north" style="height:31px;overflow:hidden;" split="false" border="false" >
+			<div class="datagrid-toolbar">
+				<a id="find" icon="icon-save" href="#" class="easyui-linkbutton" plain="true" >查找</a>
+			</div>
+		</div>
+
+		<div region="center" style="overflow:auto;padding:5px;" border="false">
+			<form id="findStaffForm" method="post">
+				<table class="table-edit" width="80%" align="center">
+					<tr class="title">
+						<td colspan="2">收派员信息</td>
+					</tr>
+					<!-- TODO 这里完善收派员添加 table -->
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name"/></td>
+					</tr>
+					<tr>
+						<td>手机</td>
+						<td><input type="text" name="telephone"/></td>
+					</tr>
+					<tr>
+						<td>单位</td>
+						<td><input type="text" name="station"/></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
+	<div class="easyui-window" title="对收派员进行修改" id="editStaffWindow" collapsible="false" minimizable="false" maximizable="false" style="top:20px;left:200px">
+		<div region="north" style="height:31px;overflow:hidden;" split="false" border="false" >
+			<div class="datagrid-toolbar">
+				<a id="edit" icon="icon-save" href="#" class="easyui-linkbutton" plain="true" >保存</a>
+			</div>
+		</div>
+
+		<div region="center" style="overflow:auto;padding:5px;" border="false">
+			<form id="editStaffForm" method="post">
+				<table class="table-edit" width="80%" align="center">
+					<tr class="title">
+						<td colspan="2">收派员信息</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="hidden" name="id">
+						</td>
+					</tr>
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name" class="easyui-validatebox" required="true" validType="minLength[2]"/></td>
+					</tr>
+					<tr>
+						<td>手机</td>
+						<td><input type="text" name="telephone" class="easyui-validatebox" required="true" validType="isphone"/></td>
+					</tr>
+					<tr>
+						<td>单位</td>
+						<td><input type="text" name="station" class="easyui-validatebox" required="true"/></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input type="checkbox" name="haspda" value="1" />
+							是否有PDA</td>
+					</tr>
+					<tr>
+						<td>取派标准</td>
+						<td>
+							<input type="text" name="standard" class="easyui-validatebox" required="true"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
 </body>
 </html>	

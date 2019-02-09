@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author xbh
@@ -69,6 +72,23 @@ public class StaffServiceImpl implements StaffService{
 		return totle != 0;
 	}
 
+	@Override
+	public Set queryStaffByTelORNameORStation(Staff staff) {
+		Set result = new HashSet() {
+		};
+		if (staff.getName() != null && staff.getName() != "" ){
+			result.addAll(staffDao.getStaffByName(staff.getName()));
+		}
+
+		if (staff.getName() != null && staff.getName() != "") {
+			result.addAll(staffDao.getStaffByStation(staff.getStation()));
+		}
+
+		if (staff.getName() != null && staff.getName() != "") {
+			result.addAll(staffDao.getStaffByName(staff.getName()));
+		}
+		return result;
+	}
 
 	@Override
 	public int save(Staff record) {
@@ -81,8 +101,8 @@ public class StaffServiceImpl implements StaffService{
 	}
 
 	@Override
-	public int update(Staff record) {
-		return 0;
+	public int updateByID(Staff record) {
+		return staffDao.updateByid(record);
 	}
 
 	@Override

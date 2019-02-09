@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author xbh
@@ -34,7 +34,6 @@ public class StaffController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	@ResponseBody
 	public String list(HttpServletRequest request, HttpServletResponse response){
-		response.setContentType("text/json;charset=UTF-8");
 		String page = request.getParameter("page");
 		String rows = request.getParameter("rows");
 
@@ -42,7 +41,8 @@ public class StaffController {
 		Gson gson = new Gson();
 
 		System.out.println(gson.toJson(vo));
-		return gson.toJson(vo);
+		String s = gson.toJson(vo);
+		return s;
 	}
 
 	@RequestMapping("/delete")
@@ -65,4 +65,27 @@ public class StaffController {
 		return (aBoolean?"1":"0");
 	}
 
+	@RequestMapping("/findStaffs")
+	@ResponseBody
+	public String findStaffs(Staff staff){
+		Gson gson = new Gson();
+		Set list = staffService.queryStaffByTelORNameORStation(staff);
+		PageVO vo = new PageVO();
+		vo.setrows(new ArrayList(list));
+		vo.setTotal(Integer.valueOf(list.size()).longValue());
+		String s = gson.toJson(vo);
+
+		return s;
+	}
+
+	/**
+	 * @param staff
+	 * @return 0失败
+	 */
+	@RequestMapping("/editStaff")
+	@ResponseBody
+	public int editStaffs(Staff staff){
+		int i = staffService.updateByID(staff);
+		return i;
+	}
 }

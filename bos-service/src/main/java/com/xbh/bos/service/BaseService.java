@@ -25,7 +25,7 @@ public interface BaseService<T> {
 	 * @param record
 	 * @return 0为更新失败
 	 */
-	int update(T record);
+	int updateByID(T record);
 
 	/**
 	 查找实体

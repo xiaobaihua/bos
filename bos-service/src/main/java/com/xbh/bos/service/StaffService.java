@@ -4,6 +4,7 @@ import com.xbh.bos.domain.Staff;
 import com.xbh.bos.domain.vo.PageVO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author xbh
@@ -16,4 +17,6 @@ public interface StaffService extends BaseService<Staff>{
 	Boolean deleteALLByList(List list);
 
 	Boolean restoreAllByList(List list);
+
+	Set queryStaffByTelORNameORStation(Staff staff);
 }

@@ -35,4 +35,18 @@ public interface StaffDao extends BaseDao<Staff>{
     @Override
     @Select("select count(*) from bc_staff")
     Integer getTotal();
+
+    @Select("SELECT * FROM bc_staff WHERE telephone = #{arg0}")
+    List<Staff> getStaffByTel(String tel);
+
+    @Select("SELECT * FROM bc_staff WHERE name = #{arg0}")
+    List<Staff> getStaffByName(String name);
+
+    @Select("SELECT * FROM bc_staff WHERE station = #{arg0}")
+    List<Staff> getStaffByStation(String station);
+
+    @Override
+    @Update("UPDATE bc_staff SET name = #{name}, telephone = #{telephone}, haspda = #{haspda}, deltag = #{deltag}" +
+        ", station = #{station}, standard = #{standard} WHERE id = #{id}")
+    int updateByid(Staff record);
 }

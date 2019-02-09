@@ -21,10 +21,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 
+	@Override
 	public User getUserByUsernameAndPassword(String username, String password){
 		return userDao.getUserByUsernameAndPassword(username, password);
 	}
 
+	@Override
 	public Integer updatePasswordById(String userID, String newPassword) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		// 用户ID存在
 		if (StringUtils.isExist(userID)){
@@ -47,19 +49,23 @@ public class UserServiceImpl implements UserService {
 		return 0;
 	}
 
+	@Override
 	public int save(User record) {
 		return 0;
 	}
 
+	@Override
 	public int deleteByID(String id) {
 		return 0;
 	}
 
-	public int update(User record) {
-		return 0;
-	}
-
+	@Override
 	public User findByID(String id) {
 		return null;
+	}
+
+	@Override
+	public int updateByID(User record) {
+		return userDao.save(record);
 	}
 }
